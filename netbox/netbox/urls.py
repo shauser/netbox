@@ -5,15 +5,16 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.static import serve
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from extras.plugins.urls import (plugin_admin_patterns, plugin_api_patterns,
+                                 plugin_patterns)
+from strawberry.django.views import GraphQLView
+from users.views import LoginView, LogoutView
 
-from extras.plugins.urls import plugin_admin_patterns, plugin_patterns, plugin_api_patterns
 from netbox.api.views import APIRootView, StatusView
 from netbox.graphql.schema import schema
-from netbox.graphql.views import GraphQLView
-from netbox.views import HomeView, StaticMediaFailureView, SearchView
-from users.views import LoginView, LogoutView
-from .admin import admin_site
+from netbox.views import HomeView, SearchView, StaticMediaFailureView
 
+from .admin import admin_site
 
 openapi_info = openapi.Info(
     title="NetBox API",

@@ -310,14 +310,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'corsheaders',
     'debug_toolbar',
-    'graphiql_debug_toolbar',
     'django_filters',
     'django_tables2',
     'django_prometheus',
-    'graphene_django',
     'mptt',
     'rest_framework',
     'social_django',
+    'strawberry.django',
     'taggit',
     'timezone_field',
     'circuits',
@@ -335,7 +334,7 @@ INSTALLED_APPS = [
 
 # Middleware
 MIDDLEWARE = [
-    'graphiql_debug_toolbar.middleware.DebugToolbarMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

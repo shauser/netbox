@@ -66,10 +66,6 @@ djangorestframework
 # https://github.com/axnsan12/drf-yasg
 drf-yasg[validation]
 
-# Django wrapper for Graphene (GraphQL support)
-# https://github.com/graphql-python/graphene-django
-graphene_django
-
 # WSGI HTTP server
 # https://gunicorn.org/
 gunicorn
@@ -121,6 +117,10 @@ social-auth-core
 # Django app for social-auth-core
 # https://github.com/python-social-auth/social-app-django
 social-auth-app-django
+
+# Django GraphQL Library
+# https://github.com/strawberry-graphql/strawberry-graphql-django
+strawberry-graphql-django
 
 # SVG image rendering (used for rack elevations)
 # https://github.com/mozman/svgwrite
