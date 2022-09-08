@@ -1,15 +1,16 @@
 import strawberry
-from strawberry import auto
 from django.contrib.contenttypes.models import ContentType
-from extras.graphql.mixins import (
+from extras.graphql.types import (
     ChangelogMixin,
     CustomFieldsMixin,
     JournalEntriesMixin,
     TagsMixin,
 )
+from strawberry import auto
+
+from netbox.graphql.base_types import BaseObjectType
 
 __all__ = (
-    "BaseObjectType",
     "ObjectType",
     "OrganizationalObjectType",
     "NetBoxObjectType",
@@ -18,14 +19,6 @@ __all__ = (
 #
 # Base types
 #
-
-
-class BaseObjectType:
-    """
-    Base GraphQL object type for all NetBox objects. Restricts the model queryset to enforce object permissions.
-    """
-
-    id: auto
 
 
 class ObjectType(ChangelogMixin, BaseObjectType):

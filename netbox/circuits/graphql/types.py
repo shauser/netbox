@@ -3,7 +3,7 @@ from typing import List
 import strawberry
 from circuits import filtersets, models
 from dcim.graphql.mixins import CabledObjectMixin
-from extras.graphql.mixins import CustomFieldsMixin, TagsMixin
+from extras.graphql.types import CustomFieldsMixin, TagsMixin
 from strawberry import auto
 
 from netbox.graphql.types import NetBoxObjectType, ObjectType, OrganizationalObjectType
