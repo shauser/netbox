@@ -7,23 +7,17 @@ from typing import List
 
 @strawberry.type
 class CircuitsQuery:
-    circuit_list: List[CircuitTerminationType] = strawberry.django.field()
+    circuit: CircuitType = strawberry.django.field()
+    circuit_list: List[CircuitType] = strawberry.django.field()
 
+    circuit_termination: CircuitTerminationType = strawberry.django.field()
+    circuit_termination_list: List[CircuitTerminationType] = strawberry.django.field()
 
-"""
-class CircuitsQuery(graphene.ObjectType):
-    circuit = ObjectField(CircuitType)
-    circuit_list = ObjectListField(CircuitType)
+    circuit_type: CircuitTypeType = strawberry.django.field()
+    circuit_type_list: List[CircuitTypeType] = strawberry.django.field()
 
-    circuit_termination = ObjectField(CircuitTerminationType)
-    circuit_termination_list = ObjectListField(CircuitTerminationType)
+    provider: ProviderType = strawberry.django.field()
+    provider_list: List[ProviderType] = strawberry.django.field()
 
-    circuit_type = ObjectField(CircuitTypeType)
-    circuit_type_list = ObjectListField(CircuitTypeType)
-
-    provider = ObjectField(ProviderType)
-    provider_list = ObjectListField(ProviderType)
-
-    provider_network = ObjectField(ProviderNetworkType)
-    provider_network_list = ObjectListField(ProviderNetworkType)
-"""
+    provider_network: ProviderNetworkType = strawberry.django.field()
+    provider_network_list: List[ProviderNetworkType] = strawberry.django.field()

@@ -1,14 +1,27 @@
-from circuits import filtersets, models
-import strawberry
-from strawberry import auto
 from typing import List
 
-__all__ = ("CircuitTerminationType",)
+import strawberry
+from circuits import filtersets, models
+from dcim.graphql.mixins import CabledObjectMixin
+from extras.graphql.mixins import CustomFieldsMixin, TagsMixin
+from strawberry import auto
+
+from netbox.graphql.types import NetBoxObjectType, ObjectType, OrganizationalObjectType
+
+__all__ = (
+    "CircuitTerminationType",
+    "CircuitType",
+    "CircuitTypeType",
+    "ProviderType",
+    "ProviderNetworkType",
+)
 
 
 @strawberry.django.type(models.CircuitTermination)
-class CircuitTerminationType:
-    id: auto
+class CircuitTerminationType(
+    CustomFieldsMixin, TagsMixin, CabledObjectMixin, ObjectType
+):
+    # filterset_class = filtersets.CircuitTerminationFilterSet
     created: auto
     last_updated: auto
     # custom_field_data
@@ -29,35 +42,25 @@ class CircuitTerminationType:
     # custom_fields:
 
 
-"""
+@strawberry.django.type(models.Circuit)
 class CircuitType(NetBoxObjectType):
-
-    class Meta:
-        model = models.Circuit
-        fields = '__all__'
-        filterset_class = filtersets.CircuitFilterSet
+    # filterset_class = filtersets.CircuitFilterSet
+    pass
 
 
+@strawberry.django.type(models.CircuitType)
 class CircuitTypeType(OrganizationalObjectType):
-
-    class Meta:
-        model = models.CircuitType
-        fields = '__all__'
-        filterset_class = filtersets.CircuitTypeFilterSet
+    # filterset_class = filtersets.CircuitTypeFilterSet
+    pass
 
 
+@strawberry.django.type(models.Provider)
 class ProviderType(NetBoxObjectType):
-
-    class Meta:
-        model = models.Provider
-        fields = '__all__'
-        filterset_class = filtersets.ProviderFilterSet
+    # filterset_class = filtersets.ProviderFilterSet
+    pass
 
 
+@strawberry.django.type(models.ProviderNetwork)
 class ProviderNetworkType(NetBoxObjectType):
-
-    class Meta:
-        model = models.ProviderNetwork
-        fields = '__all__'
-        filterset_class = filtersets.ProviderNetworkFilterSet
-"""
+    # filterset_class = filtersets.ProviderNetworkFilterSet
+    pass

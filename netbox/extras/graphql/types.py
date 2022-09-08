@@ -1,87 +1,71 @@
+import strawberry
+from strawberry import auto
 from extras import filtersets, models
 from extras.graphql.mixins import CustomFieldsMixin, TagsMixin
 from netbox.graphql.types import BaseObjectType, ObjectType
 
 __all__ = (
-    'ConfigContextType',
-    'CustomFieldType',
-    'CustomLinkType',
-    'ExportTemplateType',
-    'ImageAttachmentType',
-    'JournalEntryType',
-    'ObjectChangeType',
-    'TagType',
-    'WebhookType',
+    "ConfigContextType",
+    "CustomFieldType",
+    "CustomLinkType",
+    "ExportTemplateType",
+    "ImageAttachmentType",
+    "JournalEntryType",
+    "ObjectChangeType",
+    "TagType",
+    "WebhookType",
 )
 
 
+@strawberry.django.type(models.ConfigContext)
 class ConfigContextType(ObjectType):
-
-    class Meta:
-        model = models.ConfigContext
-        fields = '__all__'
-        filterset_class = filtersets.ConfigContextFilterSet
+    # filterset_class = filtersets.ConfigContextFilterSet
+    pass
 
 
+@strawberry.django.type(models.CustomField)
 class CustomFieldType(ObjectType):
-
-    class Meta:
-        model = models.CustomField
-        fields = '__all__'
-        filterset_class = filtersets.CustomFieldFilterSet
+    # filterset_class = filtersets.CustomFieldFilterSet
+    pass
 
 
+@strawberry.django.type(models.CustomLink)
 class CustomLinkType(ObjectType):
-
-    class Meta:
-        model = models.CustomLink
-        fields = '__all__'
-        filterset_class = filtersets.CustomLinkFilterSet
+    # filterset_class = filtersets.CustomLinkFilterSet
+    pass
 
 
+@strawberry.django.type(models.ExportTemplate)
 class ExportTemplateType(ObjectType):
-
-    class Meta:
-        model = models.ExportTemplate
-        fields = '__all__'
-        filterset_class = filtersets.ExportTemplateFilterSet
+    # filterset_class = filtersets.ExportTemplateFilterSet
+    pass
 
 
+@strawberry.django.type(models.ImageAttachment)
 class ImageAttachmentType(BaseObjectType):
-
-    class Meta:
-        model = models.ImageAttachment
-        fields = '__all__'
-        filterset_class = filtersets.ImageAttachmentFilterSet
+    # filterset_class = filtersets.ImageAttachmentFilterSet
+    pass
 
 
+@strawberry.django.type(models.JournalEntry)
 class JournalEntryType(CustomFieldsMixin, TagsMixin, ObjectType):
-
-    class Meta:
-        model = models.JournalEntry
-        fields = '__all__'
-        filterset_class = filtersets.JournalEntryFilterSet
+    # filterset_class = filtersets.JournalEntryFilterSet
+    pass
 
 
+@strawberry.django.type(models.ObjectChange)
 class ObjectChangeType(BaseObjectType):
-
-    class Meta:
-        model = models.ObjectChange
-        fields = '__all__'
-        filterset_class = filtersets.ObjectChangeFilterSet
+    # filterset_class = filtersets.ObjectChangeFilterSet
+    pass
 
 
+@strawberry.django.type(models.Tag)
 class TagType(ObjectType):
-
-    class Meta:
-        model = models.Tag
-        exclude = ('extras_taggeditem_items',)
-        filterset_class = filtersets.TagFilterSet
+    # filterset_class = filtersets.TagFilterSet
+    pass
 
 
+@strawberry.django.type(models.Webhook)
 class WebhookType(ObjectType):
-
-    class Meta:
-        model = models.Webhook
-        fields = '__all__'
-        filterset_class = filtersets.WebhookFilterSet
+    # filterset_class = filtersets.WebhookFilterSet
+    pass
