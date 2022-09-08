@@ -17,14 +17,6 @@ from sentry_sdk.integrations.django import DjangoIntegration
 
 from netbox.config import PARAMS
 
-# Monkey patch to fix Django 4.0 support for graphene-django (see
-# https://github.com/graphql-python/graphene-django/issues/1284)
-# TODO: Remove this when graphene-django 2.16 becomes available
-import django
-from django.utils.encoding import force_str
-django.utils.encoding.force_text = force_str
-
-
 #
 # Environment setup
 #
@@ -557,12 +549,11 @@ REST_FRAMEWORK = {
 # Graphene
 #
 
-GRAPHENE = {
-    # Avoids naming collision on models with 'type' field; see
-    # https://github.com/graphql-python/graphene-django/issues/185
-    'DJANGO_CHOICE_FIELD_ENUM_V3_NAMING': True,
+# settings.py
+STRAWBERRY_DJANGO = {
+    "FIELD_DESCRIPTION_FROM_HELP_TEXT": True,
+    "TYPE_DESCRIPTION_FROM_MODEL_DOCSTRING": True,
 }
-
 
 #
 # drf_yasg (OpenAPI/Swagger)

@@ -1,9 +1,16 @@
-import graphene
-
-from netbox.graphql.fields import ObjectField, ObjectListField
 from .types import *
 
+# schema.py
+import strawberry
+from typing import List
 
+
+@strawberry.type
+class CircuitsQuery:
+    circuit_list: List[CircuitTerminationType] = strawberry.django.field()
+
+
+"""
 class CircuitsQuery(graphene.ObjectType):
     circuit = ObjectField(CircuitType)
     circuit_list = ObjectListField(CircuitType)
@@ -19,3 +26,4 @@ class CircuitsQuery(graphene.ObjectType):
 
     provider_network = ObjectField(ProviderNetworkType)
     provider_network_list = ObjectListField(ProviderNetworkType)
+"""

@@ -1,5 +1,6 @@
 import strawberry
 from typing import List
+from circuits.graphql.schema import CircuitsQuery
 
 
 @strawberry.type
@@ -9,10 +10,8 @@ class User:
 
 
 @strawberry.type
-class Query:
-    @strawberry.field
-    def user(self) -> User:
-        return User(name="Patrick", age=100)
+class Query(CircuitsQuery):
+    pass
 
 
 schema = strawberry.Schema(query=Query)

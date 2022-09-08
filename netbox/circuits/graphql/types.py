@@ -1,25 +1,35 @@
 from circuits import filtersets, models
-from dcim.graphql.mixins import CabledObjectMixin
-from extras.graphql.mixins import CustomFieldsMixin, TagsMixin
-from netbox.graphql.types import ObjectType, OrganizationalObjectType, NetBoxObjectType
+import strawberry
+from strawberry import auto
+from typing import List
 
-__all__ = (
-    'CircuitTerminationType',
-    'CircuitType',
-    'CircuitTypeType',
-    'ProviderType',
-    'ProviderNetworkType',
-)
+__all__ = ("CircuitTerminationType",)
 
 
-class CircuitTerminationType(CustomFieldsMixin, TagsMixin, CabledObjectMixin, ObjectType):
+@strawberry.django.type(models.CircuitTermination)
+class CircuitTerminationType:
+    id: auto
+    created: auto
+    last_updated: auto
+    # custom_field_data
+    # tags:
+    # cable:
+    # cable_end:
+    mark_connected: auto
+    # circuit: auto
+    term_side: auto
+    # site
+    # provider_network
+    port_speed: auto
+    upstream_speed: auto
+    xconnect_id: auto
+    pp_info: auto
+    description: auto
+    # changelog:
+    # custom_fields:
 
-    class Meta:
-        model = models.CircuitTermination
-        fields = '__all__'
-        filterset_class = filtersets.CircuitTerminationFilterSet
 
-
+"""
 class CircuitType(NetBoxObjectType):
 
     class Meta:
@@ -50,3 +60,4 @@ class ProviderNetworkType(NetBoxObjectType):
         model = models.ProviderNetwork
         fields = '__all__'
         filterset_class = filtersets.ProviderNetworkFilterSet
+"""
