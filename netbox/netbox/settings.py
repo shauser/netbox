@@ -21,7 +21,7 @@ from netbox.config import PARAMS
 # Environment setup
 #
 
-VERSION = '3.3-beta2'
+VERSION = '3.3.2'
 
 # Hostname
 HOSTNAME = platform.node()
@@ -524,6 +524,10 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_METADATA_CLASS': 'netbox.api.metadata.BulkOperationMetadata',
     'DEFAULT_PAGINATION_CLASS': 'netbox.api.pagination.OptionalLimitOffsetPagination',
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.MultiPartParser',
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
         'netbox.api.authentication.TokenPermissions',
     ),
@@ -533,7 +537,6 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_VERSION': REST_FRAMEWORK_VERSION,
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
-    # 'PAGE_SIZE': PAGINATE_COUNT,
     'SCHEMA_COERCE_METHOD_NAMES': {
         # Default mappings
         'retrieve': 'read',
@@ -563,7 +566,6 @@ SWAGGER_SETTINGS = {
     'DEFAULT_AUTO_SCHEMA_CLASS': 'utilities.custom_inspectors.NetBoxSwaggerAutoSchema',
     'DEFAULT_FIELD_INSPECTORS': [
         'utilities.custom_inspectors.CustomFieldsDataFieldInspector',
-        'utilities.custom_inspectors.JSONFieldInspector',
         'utilities.custom_inspectors.NullableBooleanFieldInspector',
         'utilities.custom_inspectors.ChoiceFieldInspector',
         'utilities.custom_inspectors.SerializedPKRelatedFieldInspector',
@@ -573,6 +575,7 @@ SWAGGER_SETTINGS = {
         'drf_yasg.inspectors.ChoiceFieldInspector',
         'drf_yasg.inspectors.FileFieldInspector',
         'drf_yasg.inspectors.DictFieldInspector',
+        'drf_yasg.inspectors.JSONFieldInspector',
         'drf_yasg.inspectors.SerializerMethodFieldInspector',
         'drf_yasg.inspectors.SimpleFieldInspector',
         'drf_yasg.inspectors.StringDefaultFieldInspector',

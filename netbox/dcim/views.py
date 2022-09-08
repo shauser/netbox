@@ -589,10 +589,17 @@ class RackElevationListView(generic.ObjectListView):
         racks = filtersets.RackFilterSet(request.GET, self.queryset).qs
         total_count = racks.count()
 
-        # Determine ordering
-        reverse = bool(request.GET.get('reverse', False))
-        if reverse:
-            racks = racks.reverse()
+        ORDERING_CHOICES = {
+            'name': 'Name (A-Z)',
+            '-name': 'Name (Z-A)',
+            'facility_id': 'Facility ID (A-Z)',
+            '-facility_id': 'Facility ID (Z-A)',
+        }
+        sort = request.GET.get('sort', "name")
+        if sort not in ORDERING_CHOICES:
+            sort = 'name'
+
+        racks = racks.order_by(sort)
 
         # Pagination
         per_page = get_paginate_count(request)
@@ -614,7 +621,9 @@ class RackElevationListView(generic.ObjectListView):
             'paginator': paginator,
             'page': page,
             'total_count': total_count,
-            'reverse': reverse,
+            'sort': sort,
+            'sort_display_name': ORDERING_CHOICES[sort],
+            'sort_choices': ORDERING_CHOICES,
             'rack_face': rack_face,
             'filter_form': forms.RackElevationFilterForm(request.GET),
         })
@@ -2893,7 +2902,7 @@ class CableBulkDeleteView(generic.BulkDeleteView):
 #
 
 class ConsoleConnectionsListView(generic.ObjectListView):
-    queryset = ConsolePort.objects.filter(_path__isnull=False).order_by('device')
+    queryset = ConsolePort.objects.filter(_path__is_complete=True)
     filterset = filtersets.ConsoleConnectionFilterSet
     filterset_form = forms.ConsoleConnectionFilterForm
     table = tables.ConsoleConnectionTable
@@ -2907,7 +2916,7 @@ class ConsoleConnectionsListView(generic.ObjectListView):
 
 
 class PowerConnectionsListView(generic.ObjectListView):
-    queryset = PowerPort.objects.filter(_path__isnull=False).order_by('device')
+    queryset = PowerPort.objects.filter(_path__is_complete=True)
     filterset = filtersets.PowerConnectionFilterSet
     filterset_form = forms.PowerConnectionFilterForm
     table = tables.PowerConnectionTable
@@ -2921,7 +2930,7 @@ class PowerConnectionsListView(generic.ObjectListView):
 
 
 class InterfaceConnectionsListView(generic.ObjectListView):
-    queryset = Interface.objects.filter(_path__isnull=False).order_by('device')
+    queryset = Interface.objects.filter(_path__is_complete=True)
     filterset = filtersets.InterfaceConnectionFilterSet
     filterset_form = forms.InterfaceConnectionFilterForm
     table = tables.InterfaceConnectionTable

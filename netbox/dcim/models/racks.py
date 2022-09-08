@@ -1,5 +1,6 @@
 import decimal
 
+from django.apps import apps
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.models import ContentType
@@ -201,6 +202,10 @@ class Rack(NetBoxModel):
             return f'{self.name} ({self.facility_id})'
         return self.name
 
+    @classmethod
+    def get_prerequisite_models(cls):
+        return [apps.get_model('dcim.Site'), ]
+
     def get_absolute_url(self):
         return reverse('dcim:rack', args=[self.pk])
 
@@ -345,7 +350,7 @@ class Rack(NetBoxModel):
         # Remove units without enough space above them to accommodate a device of the specified height
         available_units = []
         for u in units:
-            if set(drange(u, u + u_height, 0.5)).issubset(units):
+            if set(drange(u, u + decimal.Decimal(u_height), 0.5)).issubset(units):
                 available_units.append(u)
 
         return list(reversed(available_units))
@@ -410,12 +415,13 @@ class Rack(NetBoxModel):
         """
         # Determine unoccupied units
         total_units = len(list(self.units))
-        available_units = self.get_available_units()
+        available_units = self.get_available_units(u_height=0.5)
 
         # Remove reserved units
-        for u in self.get_reserved_units():
-            if u in available_units:
-                available_units.remove(u)
+        for ru in self.get_reserved_units():
+            for u in drange(ru, ru + 1, 0.5):
+                if u in available_units:
+                    available_units.remove(u)
 
         occupied_unit_count = total_units - len(available_units)
         percentage = float(occupied_unit_count) / total_units * 100
@@ -476,6 +482,10 @@ class RackReservation(NetBoxModel):
 
     def __str__(self):
         return "Reservation for rack {}".format(self.rack)
+
+    @classmethod
+    def get_prerequisite_models(cls):
+        return [apps.get_model('dcim.Site'), Rack, ]
 
     def get_absolute_url(self):
         return reverse('dcim:rackreservation', args=[self.pk])

@@ -2,6 +2,8 @@ import circuits.filtersets
 import circuits.tables
 import dcim.filtersets
 import dcim.tables
+import extras.filtersets
+import extras.tables
 import ipam.filtersets
 import ipam.tables
 import tenancy.filtersets
@@ -15,6 +17,7 @@ from dcim.models import (
     Cable, Device, DeviceType, Interface, Location, Module, ModuleType, PowerFeed, Rack, RackReservation, Site,
     VirtualChassis,
 )
+from extras.models import JournalEntry
 from ipam.models import Aggregate, ASN, IPAddress, Prefix, Service, VLAN, VRF
 from tenancy.models import Contact, Tenant, ContactAssignment
 from utilities.utils import count_related
@@ -62,7 +65,7 @@ DCIM_TYPES = {
         'url': 'dcim:rack_list',
     },
     'rackreservation': {
-        'queryset': RackReservation.objects.prefetch_related('site', 'rack', 'user'),
+        'queryset': RackReservation.objects.prefetch_related('rack', 'user'),
         'filterset': dcim.filtersets.RackReservationFilterSet,
         'table': dcim.tables.RackReservationTable,
         'url': 'dcim:rackreservation_list',
@@ -238,6 +241,15 @@ WIRELESS_TYPES = {
     },
 }
 
+JOURNAL_TYPES = {
+    'journalentry': {
+        'queryset': JournalEntry.objects.prefetch_related('assigned_object', 'created_by'),
+        'filterset': extras.filtersets.JournalEntryFilterSet,
+        'table': extras.tables.JournalEntryTable,
+        'url': 'extras:journalentry_list',
+    },
+}
+
 SEARCH_TYPE_HIERARCHY = {
     'Circuits': CIRCUIT_TYPES,
     'DCIM': DCIM_TYPES,
@@ -245,6 +257,7 @@ SEARCH_TYPE_HIERARCHY = {
     'Tenancy': TENANCY_TYPES,
     'Virtualization': VIRTUALIZATION_TYPES,
     'Wireless': WIRELESS_TYPES,
+    'Journal': JOURNAL_TYPES,
 }
 
 

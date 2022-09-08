@@ -167,6 +167,10 @@ class Cluster(NetBoxModel):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_prerequisite_models(cls):
+        return [ClusterType, ]
+
     def get_absolute_url(self):
         return reverse('virtualization:cluster', args=[self.pk])
 
@@ -312,6 +316,10 @@ class VirtualMachine(NetBoxModel, ConfigContextModel):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_prerequisite_models(cls):
+        return [Cluster, ]
+
     def get_absolute_url(self):
         return reverse('virtualization:virtualmachine', args=[self.pk])
 
@@ -360,9 +368,14 @@ class VirtualMachine(NetBoxModel, ConfigContextModel):
 
         # Validate primary IP addresses
         interfaces = self.interfaces.all()
-        for field in ['primary_ip4', 'primary_ip6']:
+        for family in (4, 6):
+            field = f'primary_ip{family}'
             ip = getattr(self, field)
             if ip is not None:
+                if ip.address.version != family:
+                    raise ValidationError({
+                        field: f"Must be an IPv{family} address. ({ip} is an IPv{ip.address.version} address.)",
+                    })
                 if ip.assigned_object in interfaces:
                     pass
                 elif ip.nat_inside is not None and ip.nat_inside.assigned_object in interfaces:

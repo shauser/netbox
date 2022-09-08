@@ -1,6 +1,77 @@
 # NetBox v3.3
 
-## v3.3.0 (FUTURE)
+## v3.3.2 (2022-09-02)
+
+### Enhancements
+
+* [#9477](https://github.com/netbox-community/netbox/issues/9477) - Enable clearing applied table column ordering
+* [#10034](https://github.com/netbox-community/netbox/issues/10034) - Add L2VPN column to interface and VLAN tables
+* [#10043](https://github.com/netbox-community/netbox/issues/10043) - Add support for `limit` query parameter to available VLANs API endpoint
+* [#10060](https://github.com/netbox-community/netbox/issues/10060) - Add journal entries to global search
+* [#10195](https://github.com/netbox-community/netbox/issues/10195) - Enable filtering of device components by rack
+* [#10233](https://github.com/netbox-community/netbox/issues/10233) - Enable sorting rack elevations by facility ID
+
+### Bug Fixes
+
+* [#9328](https://github.com/netbox-community/netbox/issues/9328) - Hide available IPs when non-default ordering is applied
+* [#9481](https://github.com/netbox-community/netbox/issues/9481) - Update child device location when parent location changes
+* [#9832](https://github.com/netbox-community/netbox/issues/9832) - Improve error message when validating rack reservation units
+* [#9895](https://github.com/netbox-community/netbox/issues/9895) - Various corrections to OpenAPI spec
+* [#9962](https://github.com/netbox-community/netbox/issues/9962) - SSO login should respect `next` URL query parameter
+* [#9963](https://github.com/netbox-community/netbox/issues/9963) - Fix support for custom `CSRF_COOKIE_NAME` value
+* [#10155](https://github.com/netbox-community/netbox/issues/10155) - Fix rear port display when editing front port template for module type 
+* [#10156](https://github.com/netbox-community/netbox/issues/10156) - Avoid forcing SVG image links to open in a new window
+* [#10161](https://github.com/netbox-community/netbox/issues/10161) - Restore "set null" option for custom fields during bulk edit
+* [#10176](https://github.com/netbox-community/netbox/issues/10176) - Correct utilization display for empty racks
+* [#10177](https://github.com/netbox-community/netbox/issues/10177) - Correct display of custom fields when editing VM interfaces
+* [#10178](https://github.com/netbox-community/netbox/issues/10178) - Display manufacturer name alongside device type under device view
+* [#10181](https://github.com/netbox-community/netbox/issues/10181) - Restore MultiPartParser (regression from #10031)
+* [#10184](https://github.com/netbox-community/netbox/issues/10184) - Fix vertical alignment when displaying object attributes with buttons
+* [#10208](https://github.com/netbox-community/netbox/issues/10208) - Fix permissions evaluation for interface actions dropdown menu
+* [#10217](https://github.com/netbox-community/netbox/issues/10217) - Handle exception when trace splits to multiple rear ports
+* [#10220](https://github.com/netbox-community/netbox/issues/10220) - Validate IP version when assigning primary IPs to a virtual machine
+* [#10231](https://github.com/netbox-community/netbox/issues/10231) - Correct API schema definition for several serializer fields
+
+---
+
+## v3.3.1 (2022-08-25)
+
+### Enhancements
+
+* [#6454](https://github.com/netbox-community/netbox/issues/6454) - Include contextual help when creating first objects in UI
+* [#9935](https://github.com/netbox-community/netbox/issues/9935) - Add 802.11ay and "other" wireless interface types
+* [#10031](https://github.com/netbox-community/netbox/issues/10031) - Enforce `application/json` content type for REST API requests
+* [#10033](https://github.com/netbox-community/netbox/issues/10033) - Disable "add termination" button for point-to-point L2VPNs with two terminations
+* [#10037](https://github.com/netbox-community/netbox/issues/10037) - Add "child interface" option to actions dropdown in interfaces list
+* [#10038](https://github.com/netbox-community/netbox/issues/10038) - Add "L2VPN termination" option to actions dropdown in interfaces list
+* [#10039](https://github.com/netbox-community/netbox/issues/10039) - Add "assign FHRP group" option to actions dropdown in interfaces list
+* [#10061](https://github.com/netbox-community/netbox/issues/10061) - Replicate type when cloning L2VPN instances
+* [#10066](https://github.com/netbox-community/netbox/issues/10066) - Use fixed column widths for custom field values in UI
+* [#10133](https://github.com/netbox-community/netbox/issues/10133) - Enable nullifying device location during bulk edit
+
+### Bug Fixes
+
+* [#9663](https://github.com/netbox-community/netbox/issues/9663) - Omit available IP annotations when filtering prefix child IPs list
+* [#10040](https://github.com/netbox-community/netbox/issues/10040) - Fix exception when ordering prefixes by flat representation
+* [#10053](https://github.com/netbox-community/netbox/issues/10053) - Custom fields header should not be displayed when editing circuit terminations with no custom fields
+* [#10055](https://github.com/netbox-community/netbox/issues/10055) - Fix extraneous NAT indicator by device primary IP
+* [#10057](https://github.com/netbox-community/netbox/issues/10057) - Fix AttributeError exception when global search results include rack reservations
+* [#10059](https://github.com/netbox-community/netbox/issues/10059) - Add identifier column to L2VPN table
+* [#10070](https://github.com/netbox-community/netbox/issues/10070) - Add unique constraint for L2VPN slug
+* [#10087](https://github.com/netbox-community/netbox/issues/10087) - Correct display of far end in console/power/interface connections tables
+* [#10089](https://github.com/netbox-community/netbox/issues/10089) - `linkify` template filter should escape object representation
+* [#10094](https://github.com/netbox-community/netbox/issues/10094) - Fix 404 when using "create and add another" to add contact assignments
+* [#10108](https://github.com/netbox-community/netbox/issues/10108) - Linkify inside NAT IPs for primary device IPs in UI
+* [#10109](https://github.com/netbox-community/netbox/issues/10109) - Fix available prefixes calculation for container prefixes in the global table
+* [#10111](https://github.com/netbox-community/netbox/issues/10111) - Fix ValueError exception when searching for L2VPN objects
+* [#10118](https://github.com/netbox-community/netbox/issues/10118) - Fix display of connected LLDP neighbors for devices
+* [#10134](https://github.com/netbox-community/netbox/issues/10134) - Custom fields data serializer should return a 400 response for invalid data
+* [#10135](https://github.com/netbox-community/netbox/issues/10135) - Fix SSO support for SAML2 IDPs
+* [#10147](https://github.com/netbox-community/netbox/issues/10147) - Permit the creation of 0U device types via REST API
+
+---
+
+## v3.3.0 (2022-08-17)
 
 ### Breaking Changes
 
