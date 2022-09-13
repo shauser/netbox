@@ -548,7 +548,8 @@ class ViewTestCases:
 
         def test_bulk_import_objects_without_permission(self):
             data = {
-                'csv': self._get_csv_data(),
+                'data': self._get_csv_data(),
+                'format': 'csv',
             }
 
             # Test GET without permission
@@ -564,7 +565,8 @@ class ViewTestCases:
         def test_bulk_import_objects_with_permission(self):
             initial_count = self._get_queryset().count()
             data = {
-                'csv': self._get_csv_data(),
+                'data': self._get_csv_data(),
+                'format': 'csv',
             }
 
             # Assign model-level permission
@@ -587,7 +589,8 @@ class ViewTestCases:
         def test_bulk_import_objects_with_constrained_permission(self):
             initial_count = self._get_queryset().count()
             data = {
-                'csv': self._get_csv_data(),
+                'data': self._get_csv_data(),
+                'format': 'csv',
             }
 
             # Assign constrained permission
