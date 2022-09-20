@@ -1,5 +1,13 @@
 # NetBox v3.2
 
+## v3.2.10 (2022-09-20)
+
+### Bug Fixes
+
+* [#10135](https://github.com/netbox-community/netbox/issues/10135) - Fix SSO support for SAML2 IDPs
+
+---
+
 ## v3.2.9 (2022-08-16)
 
 ### Enhancements
