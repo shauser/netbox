@@ -10,12 +10,13 @@ from django.db import models
 from taggit.managers import TaggableManager
 
 from extras.choices import CustomFieldVisibilityChoices, ObjectChangeActionChoices
-from extras.utils import register_features
+from extras.utils import is_taggable, register_features
 from netbox.signals import post_clean
 from utilities.utils import serialize_object
 
 __all__ = (
     'ChangeLoggingMixin',
+    'CloningMixin',
     'CustomFieldsMixin',
     'CustomLinksMixin',
     'CustomValidationMixin',
@@ -80,6 +81,42 @@ class ChangeLoggingMixin(models.Model):
             objectchange.postchange_data = self.serialize_object()
 
         return objectchange
+
+
+class CloningMixin(models.Model):
+    """
+    Provides the clone() method used to prepare a copy of existing objects.
+    """
+    class Meta:
+        abstract = True
+
+    def clone(self):
+        """
+        Returns a dictionary of attributes suitable for creating a copy of the current instance. This is used for pre-
+        populating an object creation form in the UI. By default, this method will replicate any fields listed in the
+        model's `clone_fields` list (if defined), but it can be overridden to apply custom logic.
+
+        ```python
+        class MyModel(NetBoxModel):
+            def clone(self):
+                attrs = super().clone()
+                attrs['extra-value'] = 123
+                return attrs
+        ```
+        """
+        attrs = {}
+
+        for field_name in getattr(self, 'clone_fields', []):
+            field = self._meta.get_field(field_name)
+            field_value = field.value_from_object(self)
+            if field_value not in (None, ''):
+                attrs[field_name] = field_value
+
+        # Include tags (if applicable)
+        if is_taggable(self):
+            attrs['tags'] = [tag.pk for tag in self.tags.all()]
+
+        return attrs
 
 
 class CustomFieldsMixin(models.Model):

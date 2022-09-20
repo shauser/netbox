@@ -21,7 +21,7 @@ from netbox.config import PARAMS
 # Environment setup
 #
 
-VERSION = '3.3.2'
+VERSION = '3.3.5-dev'
 
 # Hostname
 HOSTNAME = platform.node()

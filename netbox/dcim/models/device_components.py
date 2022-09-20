@@ -908,18 +908,20 @@ class FrontPort(ModularComponentModel, CabledObjectModel):
     def clean(self):
         super().clean()
 
-        # Validate rear port assignment
-        if self.rear_port.device != self.device:
-            raise ValidationError({
-                "rear_port": f"Rear port ({self.rear_port}) must belong to the same device"
-            })
+        if hasattr(self, 'rear_port'):
 
-        # Validate rear port position assignment
-        if self.rear_port_position > self.rear_port.positions:
-            raise ValidationError({
-                "rear_port_position": f"Invalid rear port position ({self.rear_port_position}): Rear port "
-                                      f"{self.rear_port.name} has only {self.rear_port.positions} positions"
-            })
+            # Validate rear port assignment
+            if self.rear_port.device != self.device:
+                raise ValidationError({
+                    "rear_port": f"Rear port ({self.rear_port}) must belong to the same device"
+                })
+
+            # Validate rear port position assignment
+            if self.rear_port_position > self.rear_port.positions:
+                raise ValidationError({
+                    "rear_port_position": f"Invalid rear port position ({self.rear_port_position}): Rear port "
+                                          f"{self.rear_port.name} has only {self.rear_port.positions} positions"
+                })
 
 
 class RearPort(ModularComponentModel, CabledObjectModel):
@@ -953,12 +955,13 @@ class RearPort(ModularComponentModel, CabledObjectModel):
         super().clean()
 
         # Check that positions count is greater than or equal to the number of associated FrontPorts
-        frontport_count = self.frontports.count()
-        if self.positions < frontport_count:
-            raise ValidationError({
-                "positions": f"The number of positions cannot be less than the number of mapped front ports "
-                             f"({frontport_count})"
-            })
+        if self.pk:
+            frontport_count = self.frontports.count()
+            if self.positions < frontport_count:
+                raise ValidationError({
+                    "positions": f"The number of positions cannot be less than the number of mapped front ports "
+                                 f"({frontport_count})"
+                })
 
 
 #
