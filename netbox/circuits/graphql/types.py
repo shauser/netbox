@@ -18,9 +18,7 @@ __all__ = (
 
 
 @strawberry.django.type(models.CircuitTermination)
-class CircuitTerminationType(
-    CustomFieldsMixin, TagsMixin, CabledObjectMixin, ObjectType
-):
+class CircuitTerminationType(CustomFieldsMixin, TagsMixin, CabledObjectMixin, ObjectType):
     # filterset_class = filtersets.CircuitTerminationFilterSet
     created: auto
     last_updated: auto

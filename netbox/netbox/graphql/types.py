@@ -21,6 +21,7 @@ __all__ = (
 #
 
 
+@strawberry.type
 class ObjectType(ChangelogMixin, BaseObjectType):
     """
     Base GraphQL object type for unclassified models which support change logging
@@ -29,6 +30,7 @@ class ObjectType(ChangelogMixin, BaseObjectType):
     pass
 
 
+@strawberry.type
 class OrganizationalObjectType(
     ChangelogMixin, CustomFieldsMixin, TagsMixin, BaseObjectType
 ):
@@ -39,6 +41,7 @@ class OrganizationalObjectType(
     pass
 
 
+@strawberry.type
 class NetBoxObjectType(
     ChangelogMixin, CustomFieldsMixin, JournalEntriesMixin, TagsMixin, BaseObjectType
 ):

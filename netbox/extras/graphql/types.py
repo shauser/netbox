@@ -3,6 +3,7 @@ import typing
 import strawberry
 import strawberry_django
 from extras import filtersets, models
+from strawberry import auto
 
 from netbox.graphql.base_types import BaseObjectType
 
@@ -25,29 +26,25 @@ __all__ = (
 )
 
 
+@strawberry.interface
 class ConfigContextMixin:
-
-    """
-    config_context = GenericScalar()
-
-    """
-
-    @strawberry_django.field
-    def config_context(self, info) -> typing.Dict:
+    @strawberry.django.field
+    def config_context(self, info) -> str:
         return self.get_config_context()
 
 
+@strawberry.type
 class CustomFieldsMixin:
-    """
-    custom_fields = GenericScalar()
+    custom_field_data: str
 
-    def resolve_custom_fields(self, info):
+    '''
+    @strawberry.django.field
+    def custom_fields(self, info) -> str:
         return self.custom_field_data
-    """
-
-    pass
+    '''
 
 
+@strawberry.interface
 class ImageAttachmentsMixin:
     """
     image_attachments = graphene.List('extras.graphql.types.ImageAttachmentType')
@@ -59,6 +56,7 @@ class ImageAttachmentsMixin:
     pass
 
 
+@strawberry.interface
 class JournalEntriesMixin:
     """
     journal_entries = graphene.List('extras.graphql.types.JournalEntryType')
@@ -67,9 +65,10 @@ class JournalEntriesMixin:
         return self.journal_entries.restrict(info.context.user, 'view')
     """
 
-    pass
+    id: int
 
 
+@strawberry.type
 class TagsMixin:
     """
     tags = graphene.List('extras.graphql.types.TagType')
@@ -78,7 +77,7 @@ class TagsMixin:
         return self.tags.all()
     """
 
-    pass
+    id: int
 
 
 @strawberry.django.type(models.ObjectChange)
@@ -87,12 +86,16 @@ class ObjectChangeType(BaseObjectType):
     pass
 
 
+@strawberry.interface
 class ChangelogMixin:
     """
     changelog = graphene.List('extras.graphql.types.ObjectChangeType')
 
     """
 
+    id: int
+
+    '''
     @strawberry_django.field
     def changelog(self) -> typing.List[ObjectChangeType]:
         content_type = ContentType.objects.get_for_model(self)
@@ -100,6 +103,7 @@ class ChangelogMixin:
             changed_object_type=content_type, changed_object_id=self.pk
         )
         return object_changes.restrict(info.context.user, "view")
+    '''
 
 
 @strawberry.django.type(models.ConfigContext)
