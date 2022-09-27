@@ -320,6 +320,7 @@ INSTALLED_APPS = [
     'social_django',
     'taggit',
     'timezone_field',
+    'search',
     'circuits',
     'dcim',
     'ipam',
@@ -331,7 +332,6 @@ INSTALLED_APPS = [
     'wireless',
     'django_rq',  # Must come after extras to allow overriding management commands
     'drf_yasg',
-    'search',
 ]
 
 # Middleware
