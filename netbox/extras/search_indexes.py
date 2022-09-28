@@ -7,14 +7,14 @@ from utilities.utils import count_related
 
 
 class JournalEntryIndex(SearchMixin):
-    def __init__(self):
-        self.model = JournalEntry
-        self.queryset = JournalEntry.objects.prefetch_related('assigned_object', 'created_by')
-        self.filterset = extras.filtersets.JournalEntryFilterSet
-        self.table = extras.tables.JournalEntryTable
-        self.url = 'extras:journalentry_list'
+    model = JournalEntry
+    queryset = JournalEntry.objects.prefetch_related('assigned_object', 'created_by')
+    filterset = extras.filtersets.JournalEntryFilterSet
+    table = extras.tables.JournalEntryTable
+    url = 'extras:journalentry_list'
+    choice_header = 'Journal'
 
 
 JOURNAL_SEARCH_TYPES = {
-    'journalentry': JournalEntryIndex(),
+    'journalentry': JournalEntryIndex,
 }
