@@ -7,7 +7,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col col-12 col-xl-5">
+        <div class="col col-12 col-xl-6">
             <div class="card">
                 <h5 class="card-header">
                     Device
@@ -152,7 +152,8 @@
             {% include 'inc/panels/tags.html' %}
             {% include 'inc/panels/comments.html' %}
             {% plugin_left_page object %}
-
+        </div>
+        <div class="col col-12 col-xl-6">
             <div class="card">
                 <h5 class="card-header">Management</h5>
                 <div class="card-body">
@@ -285,15 +286,14 @@
             </div>
             {% include 'inc/panels/contacts.html' %}
             {% include 'inc/panels/image_attachments.html' %}
-        </div>
-        <div class="col col-12 col-xl-7">
-          <div class="text-end mb-4">
-            <select class="btn btn-sm btn-outline-dark rack-view">
-              <option value="images-and-labels" selected="selected">Images and Labels</option>
-              <option value="images-only">Images only</option>
-              <option value="labels-only">Labels only</option>
-            </select>
-          </div>
+
+            <div class="text-end mb-4">
+              <select class="btn btn-sm btn-outline-dark rack-view">
+                <option value="images-and-labels" selected="selected">Images and Labels</option>
+                <option value="images-only">Images only</option>
+                <option value="labels-only">Labels only</option>
+              </select>
+            </div>
             {% if object.rack %}
             <div class="row" style="margin-bottom: 20px">
                 <div class="col col-md-6 col-sm-6 col-xs-12 text-center">
@@ -310,6 +310,8 @@
                 </div>
             </div>
             {% endif %}
+
+            {% plugin_right_page object %}
         </div>
     </div>
     <div class="row">
