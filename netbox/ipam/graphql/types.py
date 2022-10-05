@@ -63,10 +63,11 @@ class FHRPGroupAssignmentType(BaseObjectType):
 
 
 class IPAddressType(NetBoxObjectType):
+    assigned_object = graphene.Field('ipam.graphql.gfk_mixins.IPAddressAssignmentType')
 
     class Meta:
         model = models.IPAddress
-        fields = '__all__'
+        exclude = ('assigned_object_type', 'assigned_object_id')
         filterset_class = filtersets.IPAddressFilterSet
 
     def resolve_role(self, info):
