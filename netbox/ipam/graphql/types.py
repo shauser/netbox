@@ -1,5 +1,6 @@
 import graphene
 
+from graphene_django import DjangoObjectType
 from ipam import filtersets, models
 from netbox.graphql.scalars import BigInt
 from netbox.graphql.types import BaseObjectType, OrganizationalObjectType, NetBoxObjectType
@@ -163,7 +164,9 @@ class L2VPNType(NetBoxObjectType):
 
 
 class L2VPNTerminationType(NetBoxObjectType):
+    assigned_object = graphene.Field('ipam.graphql.gfk_mixins.L2VPNAssignmentType')
+
     class Meta:
         model = models.L2VPNTermination
-        fields = '__all__'
+        exclude = ('assigned_object_type', 'assigned_object_id')
         filtersets_class = filtersets.L2VPNTerminationFilterSet
