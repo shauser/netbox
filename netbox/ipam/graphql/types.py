@@ -55,10 +55,11 @@ class FHRPGroupType(NetBoxObjectType):
 
 
 class FHRPGroupAssignmentType(BaseObjectType):
+    interface = graphene.Field('ipam.graphql.gfk_mixins.FHRPGroupInterfaceType')
 
     class Meta:
         model = models.FHRPGroupAssignment
-        fields = '__all__'
+        exclude = ('interface_type', 'interface_id')
         filterset_class = filtersets.FHRPGroupAssignmentFilterSet
 
 
@@ -142,10 +143,11 @@ class VLANType(NetBoxObjectType):
 
 
 class VLANGroupType(OrganizationalObjectType):
+    scope = graphene.Field('ipam.graphql.gfk_mixins.VLANGroupScopeType')
 
     class Meta:
         model = models.VLANGroup
-        fields = '__all__'
+        exclude = ('scope_type', 'scope_id')
         filterset_class = filtersets.VLANGroupFilterSet
 
 
