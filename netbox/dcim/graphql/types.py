@@ -101,10 +101,11 @@ class CableType(NetBoxObjectType):
 
 
 class CableTerminationType(NetBoxObjectType):
+    termination = graphene.Field('dcim.graphql.gfk_mixins.CableTerminationTerminationType')
 
     class Meta:
         model = models.CableTermination
-        fields = '__all__'
+        exclude = ('termination_type', 'termination_id')
         filterset_class = filtersets.CableTerminationFilterSet
 
 
@@ -183,10 +184,11 @@ class DeviceBayTemplateType(ComponentTemplateObjectType):
 
 
 class InventoryItemTemplateType(ComponentTemplateObjectType):
+    component = graphene.Field('dcim.graphql.gfk_mixins.InventoryItemTemplateComponentType')
 
     class Meta:
         model = models.InventoryItemTemplate
-        fields = '__all__'
+        exclude = ('component_type', 'component_id')
         filterset_class = filtersets.InventoryItemTemplateFilterSet
 
 
@@ -269,10 +271,11 @@ class InterfaceTemplateType(ComponentTemplateObjectType):
 
 
 class InventoryItemType(ComponentObjectType):
+    component = graphene.Field('dcim.graphql.gfk_mixins.InventoryItemComponentType')
 
     class Meta:
         model = models.InventoryItem
-        fields = '__all__'
+        exclude = ('component_type', 'component_id')
         filterset_class = filtersets.InventoryItemFilterSet
 
 
